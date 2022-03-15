@@ -42,8 +42,16 @@ Referências extras relacionadas com o conteúdos das aulas, ou materiais
 que comentamos quando tiramos dúvidas (não necessariamente são
 relacionadas com o conteúdo da aula).
 
-| Aula | Tema | Descrição |
-| :--- | :--- | :-------- |
+| Aula | Tema        | Descrição                                                                                            |
+| ---: | :---------- | :--------------------------------------------------------------------------------------------------- |
+|    0 | Instalação  | [Capítulo do livro “Ciência de Dados em R”: Instalação](https://livro.curso-r.com/1-instalacao.html) |
+|    1 | Comunidades | [R-Ladies - Dashboard](https://benubah.github.io/r-community-explorer/rladies.html)                  |
+|    1 | Comunidades | [Apresentação sobre a R-Ladies São Paulo](https://r-ladies-sao-paulo.github.io/RLadiesTheme/)        |
+|    1 | Comunidades | [AI Inclusive](https://www.ai-inclusive.org/)                                                        |
+|    1 | Comunidades | [Grupo de telegram R Brasil](https://t.me/rbrasiloficial)                                            |
+|    1 | Curso-R     | [Blog da Curso-R](https://blog.curso-r.com/)                                                         |
+|    1 | Curso-R     | [Canal no Youtube - Lives nas quartas-feiras às 20h](https://www.youtube.com/c/CursoR6/featured)     |
+|    1 | Curso-R     | [Materiais dos cursos](https://curso-r.com/material/)                                                |
 
 ## Redes sociais da Curso-R
 
