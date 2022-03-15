@@ -96,17 +96,51 @@ knitr::kable(
 
 
 
+## Lição de casa
+
+```{r echo=FALSE, message=FALSE}
+library(magrittr, include.only = "%>%")
+googlesheets4::gs4_auth()
+
+tarefas_raw <-
+  "https://docs.google.com/spreadsheets/d/1Ipmjvh3yJKRMU_ScQCb5z4UwQuzjBV9Z3PIF_ojvFME/edit#gid=804267470" %>%
+  googlesheets4::read_sheet("licao-de-casa-r4ds-1") 
+
+tarefas <- tarefas_raw %>%
+  dplyr::mutate(link = glue::glue("[{desc}]({url})"),
+                respostas = glue::glue("[Respostas]({url_respostas})")) %>%
+  dplyr::arrange(aula) %>%
+  dplyr::select(-url_respostas, -url, -desc) |> 
+  dplyr::filter(aula <= params$num_aula)
+
+```
+
+### Tarefas sugeridas
 
 ```{r}
-# ## Lição de casa
-# tibble::tibble(
-#   nome = CursoRopen:::list_github_files(params$main_repo, "exercicios/"),
-#   link = paste0("https://curso-r.github.io/", params$main_repo, "/", nome),
-#   exercicio = glue::glue("[{nome}]({link})")
-# ) %>%
-#     dplyr::filter(!stringr::str_detect(nome, "resolucao_")) %>% 
-#   dplyr::select(exercicio) %>% 
-#   knitr::kable()
+tarefas |> 
+  dplyr::filter(tipo_tarefa == "tarefa") |> 
+  dplyr::select(-tipo_tarefa) |> 
+  knitr::kable(col.names = c("Aula", "Descrição", "Respostas"))
+```
+
+
+### Leituras sugeridas
+
+```{r}
+tarefas |> 
+  dplyr::filter(tipo_tarefa == "leitura") |> 
+  dplyr::select(-tipo_tarefa, -respostas) |> 
+  knitr::kable(col.names = c("Aula", "Descrição"))
+```
+
+### Tarefas complementares
+
+```{r}
+tarefas |> 
+  dplyr::filter(tipo_tarefa == "tarefa complementar") |> 
+  dplyr::select(-tipo_tarefa) |> 
+  knitr::kable(col.names = c("Aula", "Descrição", "Respostas"))
 ```
 
 
