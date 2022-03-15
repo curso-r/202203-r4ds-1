@@ -37,6 +37,27 @@ Fora do horário de aula ou monitoria:
 | :------------------------------------------------------------------------------------------------------------------------ |
 | [scripts/01-introducao-ao-R.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/scripts/01-introducao-ao-R.R) |
 
+## Lição de casa
+
+### Tarefas sugeridas
+
+| Aula | Descrição                                                                                               | Respostas                                                      |
+| ---: | :------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------- |
+|    1 | [Ler e fazer os exercícios — R como calculadora](https://livro.curso-r.com/3-2-r-como-calculadora.html) | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html) |
+|    1 | [Ler e fazer os exercícios — Objetos](https://livro.curso-r.com/3-3-objetosfuncoes)                     | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html) |
+
+### Leituras sugeridas
+
+| Aula | Descrição                                                                       |
+| ---: | :------------------------------------------------------------------------------ |
+|    1 | [Ler a seção “Pedindo ajuda”](https://livro.curso-r.com/3-1-pedindo-ajuda.html) |
+|    1 | [Ler a seção “Data frames”](https://livro.curso-r.com/3-4-data-frames.html)     |
+
+### Tarefas complementares
+
+| Aula | Descrição | Respostas |
+| ---: | :-------- | :-------- |
+
 ## Material extra
 
 Referências extras relacionadas com o conteúdos das aulas, ou materiais
