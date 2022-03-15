@@ -75,20 +75,21 @@ dplyr::mutate(
 ## Scripts utilizados em aula
 
 ```{r}
-pasta <- "scripts/"
+pasta <- "scripts"
 
 
 knitr::kable(
   tibble::tibble(
-    script = CursoRopen:::list_github_files(params$turma, pasta, ".R$"),
+    #script = CursoRopen:::list_github_files(params$turma, pasta, ".R$"),
+    script = list.files(pasta, full.names = TRUE),
     link = paste0(
-      "https://github.com/curso-r/",
+      "https://raw.githubusercontent.com/curso-r/",
       params$turma,
-      "/blob/master/",
+      "/main/",
       script
     )
-  ) %>%
-    dplyr::mutate(script = glue::glue("[{script}]({link})")) %>%
+  ) |> 
+    dplyr::mutate(script = glue::glue("[{script}]({link})")) |> 
     dplyr::select(script)
 )
 ```
