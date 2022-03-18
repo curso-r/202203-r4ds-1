@@ -3,28 +3,28 @@
 
 ## Informações importantes
 
-  - [Clique
+-   [Clique
     aqui](https://github.com/curso-r/main-r4ds-1/raw/master/material_do_curso.zip)
     para baixar o material do curso.
 
-  - Nosso blog: <https://curso-r.com/blog/>
+-   Nosso blog: <https://curso-r.com/blog/>
 
-  - Nossos livros: [Ciência de Dados em R](https://livro.curso-r.com/) e
+-   Nossos livros: [Ciência de Dados em R](https://livro.curso-r.com/) e
     [Zen do R](https://curso-r.github.io/zen-do-r/)
 
 ## Dúvidas
 
 Fora do horário de aula ou monitoria:
 
-  - perguntas gerais sobre o curso deverão ser feitas no Classroom.
+-   perguntas gerais sobre o curso deverão ser feitas no Classroom.
 
-  - perguntas sobre R, principalmente as que envolverem código, deverão
+-   perguntas sobre R, principalmente as que envolverem código, deverão
     ser enviadas no [nosso fórum](https://discourse.curso-r.com/).
 
 ## Slides
 
 | slides                                                                                                  | pdf                                                                                                   |
-| :------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------- |
+|:--------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------|
 | [01-introducao-ao-curso.html](https://curso-r.github.io/main-r4ds-1/slides/01-introducao-ao-curso.html) | [01-introducao-ao-curso.pdf](https://curso-r.github.io/main-r4ds-1/slides/01-introducao-ao-curso.pdf) |
 | [02-introducao-ao-r.html](https://curso-r.github.io/main-r4ds-1/slides/02-introducao-ao-r.html)         | [02-introducao-ao-r.pdf](https://curso-r.github.io/main-r4ds-1/slides/02-introducao-ao-r.pdf)         |
 | [03-importacao.html](https://curso-r.github.io/main-r4ds-1/slides/03-importacao.html)                   | [03-importacao.pdf](https://curso-r.github.io/main-r4ds-1/slides/03-importacao.pdf)                   |
@@ -34,29 +34,42 @@ Fora do horário de aula ou monitoria:
 ## Scripts utilizados em aula
 
 | script                                                                                                                    |
-| :------------------------------------------------------------------------------------------------------------------------ |
+|:--------------------------------------------------------------------------------------------------------------------------|
 | [scripts/01-introducao-ao-R.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/scripts/01-introducao-ao-R.R) |
+| [scripts/02-importacao.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/scripts/02-importacao.R)           |
+
+-   Parte prática:
+
+| script                                                                                            |
+|:--------------------------------------------------------------------------------------------------|
+| [pratica/aula_2.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_2.R) |
 
 ## Lição de casa
 
 ### Tarefas sugeridas
 
-| Aula | Descrição                                                                                               | Respostas                                                      |
-| ---: | :------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------- |
-|    1 | [Ler e fazer os exercícios — R como calculadora](https://livro.curso-r.com/3-2-r-como-calculadora.html) | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html) |
-|    1 | [Ler e fazer os exercícios — Objetos](https://livro.curso-r.com/3-3-objetosfuncoes)                     | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html) |
+| Aula | Descrição                                                                                                  | Respostas                                                                |
+|-----:|:-----------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------|
+|    1 | [Ler e fazer os exercícios — R como calculadora](https://livro.curso-r.com/3-2-r-como-calculadora.html)    | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html)           |
+|    1 | [Ler e fazer os exercícios — Objetos](https://livro.curso-r.com/3-3-objetosfuncoes)                        | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html)           |
+|    2 | [Ler e fazer os exercícios — Classes](https://livro.curso-r.com/3-5-classes.html)                          | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html)           |
+|    2 | [Ler e fazer os exercícios - Vetores](https://livro.curso-r.com/3-6-vetores.html)                          | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html#vetores-1) |
+|    2 | [Ler e fazer exercícios - Importação (seções 5.1, 5.2 e 5.3)](https://livro.curso-r.com/5-importacao.html) | [Respostas](https://livro.curso-r.com/13-2-importa%C3%A7%C3%A3o.html)    |
 
 ### Leituras sugeridas
 
-| Aula | Descrição                                                                       |
-| ---: | :------------------------------------------------------------------------------ |
-|    1 | [Ler a seção “Pedindo ajuda”](https://livro.curso-r.com/3-1-pedindo-ajuda.html) |
-|    1 | [Ler a seção “Data frames”](https://livro.curso-r.com/3-4-data-frames.html)     |
+| Aula | Descrição                                                                                                                 |
+|-----:|:--------------------------------------------------------------------------------------------------------------------------|
+|    1 | [Ler a seção “Pedindo ajuda”](https://livro.curso-r.com/3-1-pedindo-ajuda.html)                                           |
+|    1 | [Ler a seção “Data frames”](https://livro.curso-r.com/3-4-data-frames.html)                                               |
+|    2 | [Ler - Capítulo do RStudio (tópicos 2.1, 2.2 e 2.3 - telas, atalhos, projetos)](https://livro.curso-r.com/2-rstudio.html) |
 
 ### Tarefas complementares
 
-| Aula | Descrição | Respostas |
-| ---: | :-------- | :-------- |
+| Aula | Descrição                                                                                                                                                                |
+|-----:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    2 | [\[OPCIONAL\] Para quem não fez o curso Introdução à programação com R: Exercícios de introdução ao R](https://acursor.shinyapps.io/intro-programacao_introducao/)       |
+|    2 | [\[OPCIONAL\] Para quem não fez o curso Introdução à programação com R: Exercícios de introdução aos dataframes](https://acursor.shinyapps.io/intro-programacao_tabelas) |
 
 ## Material extra
 
@@ -64,17 +77,29 @@ Referências extras relacionadas com o conteúdos das aulas, ou materiais
 que comentamos quando tiramos dúvidas (não necessariamente são
 relacionadas com o conteúdo da aula).
 
-| Aula | Tema        | Descrição                                                                                               |
-| ---: | :---------- | :------------------------------------------------------------------------------------------------------ |
-|    0 | Instalação  | [Capítulo do livro “Ciência de Dados em R”: Instalação](https://livro.curso-r.com/1-instalacao.html)    |
-|    1 | Comunidades | [R-Ladies - Dashboard](https://benubah.github.io/r-community-explorer/rladies.html)                     |
-|    1 | Comunidades | [Apresentação sobre a R-Ladies São Paulo](https://r-ladies-sao-paulo.github.io/RLadiesTheme/)           |
-|    1 | Comunidades | [AI Inclusive](https://www.ai-inclusive.org/)                                                           |
-|    1 | Comunidades | [Grupo de telegram R Brasil](https://t.me/rbrasiloficial)                                               |
-|    1 | Curso-R     | [Blog da Curso-R](https://blog.curso-r.com/)                                                            |
-|    1 | Curso-R     | [Canal no Youtube - Lives nas quartas-feiras às 20h](https://www.youtube.com/c/CursoR6/featured)        |
-|    1 | Curso-R     | [Materiais dos cursos](https://curso-r.com/material/)                                                   |
-|    1 | Curso-R     | [Material do curso Introdução à Programação com R](https://curso-r.github.io/202202-intro-programacao/) |
+| Aula | Tema               | Descrição                                                                                                                                                         |
+|-----:|:-------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    0 | Instalação         | [Capítulo do livro “Ciência de Dados em R”: Instalação](https://livro.curso-r.com/1-instalacao.html)                                                              |
+|    1 | Comunidades        | [R-Ladies - Dashboard](https://benubah.github.io/r-community-explorer/rladies.html)                                                                               |
+|    1 | Comunidades        | [Apresentação sobre a R-Ladies São Paulo](https://r-ladies-sao-paulo.github.io/RLadiesTheme/)                                                                     |
+|    1 | Comunidades        | [AI Inclusive](https://www.ai-inclusive.org/)                                                                                                                     |
+|    1 | Comunidades        | [Grupo de telegram R Brasil](https://t.me/rbrasiloficial)                                                                                                         |
+|    1 | Curso-R            | [Blog da Curso-R](https://blog.curso-r.com/)                                                                                                                      |
+|    1 | Curso-R            | [Canal no Youtube - Lives nas quartas-feiras às 20h](https://www.youtube.com/c/CursoR6/featured)                                                                  |
+|    1 | Curso-R            | [Materiais dos cursos](https://curso-r.com/material/)                                                                                                             |
+|    1 | Curso-R            | [Material do curso Introdução à Programação com R](https://curso-r.github.io/202202-intro-programacao/)                                                           |
+|    2 | Introdução         | [Folha de cola (cheatsheet): R Básico](https://rstudio.com/wp-content/uploads/2016/05/base-r.pdf)                                                                 |
+|    2 | Introdução         | [Folha de cola (cheatsheet): RStudio](https://raw.githubusercontent.com/rstudio/cheatsheets/master/translations/portuguese/rstudio-IDE-cheatsheet-portuguese.pdf) |
+|    2 | Introdução         | [Capítulo do livro “Ciência de Dados em R”: R Básico](https://livro.curso-r.com/3-r-base.html)                                                                    |
+|    2 | Introdução         | [Capítulo do livro “Ciência de Dados em R”: Pacotes](https://livro.curso-r.com/4-pacotes.html)                                                                    |
+|    2 | Importação         | [Capítulo do livro “Ciência de Dados em R”: Importação](https://livro.curso-r.com/5-importacao.html)                                                              |
+|    2 | Importação - Extra | [Integração com banco de dados](https://youtu.be/Es8H2LjfikY)                                                                                                     |
+|    2 | Importação         | [Capítulo do livro “Zen do R”: Rproj e diretórios](https://curso-r.github.io/zen-do-r/rproj-dir.html)                                                             |
+|    2 | Importação         | [Folha de cola (cheatsheet): Importação](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf)                                            |
+|    2 | Importação         | [Importação de dados do google sheets](https://googlesheets4.tidyverse.org/)                                                                                      |
+|    2 | Exportar dados     | [Salvar bases em excel](https://docs.ropensci.org/writexl/)                                                                                                       |
+|    2 | Importação         | [Ler bases em excel](https://readxl.tidyverse.org/)                                                                                                               |
+|    2 | Importação         | [Post sobre acessar dados com o Google Sheets](https://blog.curso-r.com/posts/2022-03-08-googlesheets4/)                                                          |
 
 ## Redes sociais da Curso-R
 

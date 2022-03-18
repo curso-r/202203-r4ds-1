@@ -279,8 +279,19 @@ vetor2 <- c("a", "b", "c")
 class(vetor1)
 class(vetor2)
 
+vetor3 <- c(1, 2, 3, "a", "b","c", TRUE, FALSE)
+vetor3 
+class(vetor3)
+
+# true recebeu 1, false recebeu 0
+vetor4 <- c(1, 2, 3, TRUE, FALSE)
+vetor4
+class(vetor4)
+
 # Se tentarmos misturar duas classes, o R vai apresentar o
 # comportamento conhecido como coerção
+
+
 
 vetor <- c(1, 2, "a")
 
@@ -292,9 +303,18 @@ class(vetor)
 # coerções forçadas por você
 as.numeric(c(TRUE, FALSE, FALSE))
 as.character(c(TRUE, FALSE, FALSE))
+# as.____()
 
 # Por consquência, cada coluna de uma base 
 # guarda valores de apenas uma classe.
+
+str(mtcars)
+str(imdb)
+
+# o tipo de classe sempre ficará vinculado à coluna!
+# nome_da_base[ linhas, colunas]
+imdb[ 1, ]
+imdb[ 1, 1]
 
 # Naturalmente, podemos fazer operações matemáticas com vetores
 
@@ -312,11 +332,38 @@ vetor2 <- c(10, 20, 30)
 
 vetor1  + vetor2
 
+# reciclando!!
+
+vetor3 <- c(1, 2)
+
+vetor4 <- c(10, 20, 30, 40, 50, 60)
+
+vetor3 + vetor4
+
+# reciclagem pode ser confuso!
+vetor5 <- c(1, 2)
+
+vetor6 <- c(10, 20, 30, 40, 50)
+
+vetor5 + vetor6
+# 
+# Warning message:
+#   In vetor5 + vetor6 :
+#   longer object length is not a multiple of shorter object length
+# o comprimento do objeto maior (vetor6) não é multiplo do comprimento
+# do objeto menor (vetor 5)
+
+
+# R BASE
+# Base R
+
+
+
 # Pacotes -----------------------------------------------------------------
 
 # Para instalar pacotes
 
-install.packages("tidyverse")
+# install.packages("tidyverse")
 library(tidyverse)
 library(dplyr)
 
