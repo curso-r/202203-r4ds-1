@@ -24,6 +24,9 @@ glimpse(basedadosexecucao2022)
 
 # ---------
 # google sheets
+# post: https://blog.curso-r.com/posts/2022-03-08-googlesheets4/
+
+
 library(googlesheets4)
 url_g <- "https://docs.google.com/spreadsheets/d/19hfxa7unzP_rCfXORbC0Qs52xX8Qmy_jyebRIwxQgnU/edit#gid=0"
 
