@@ -2,6 +2,7 @@
 
 library(tidyverse)
 library(dplyr) # esse é o pacote que vamos usar hoje!
+
 # Base de dados -----------------------------------------------------------
 
 imdb <- read_rds("dados/imdb.rds")
@@ -12,10 +13,15 @@ glimpse(imdb)
 names(imdb)
 View(imdb)
 
+
+drop_na(imdb)
+# equivale à: 
+imdb %>% drop_na()
+
 # dplyr: 6 verbos principais
 # select()    # seleciona colunas do data.frame
-# filter()    # filtra linhas do data.frame
 # arrange()   # reordena as linhas do data.frame
+# filter()    # filtra linhas do data.frame
 # mutate()    # cria novas colunas no data.frame (ou atualiza as colunas existentes)
 # summarise() + group_by() # sumariza o data.frame
 # left_join   # junta dois data.frames
@@ -282,43 +288,99 @@ is.na(x)
 
 # Filtrando uma coluna da base
 
-imdb %>% filter(direcao == "Quentin Tarantino")
+imdb_recortado <- imdb %>% 
+  select(titulo, direcao, nota_imdb, num_avaliacoes) %>% 
+  drop_na()
 
-imdb %>% filter(nota_imdb > 9)
-imdb %>% filter(num_avaliacoes > 10000)
+imdb_recortado %>%
+  filter(direcao == "Quentin Tarantino")
+
+# mostrar exemplo do detect!
+
+imdb_recortado %>% filter(nota_imdb > 9)
+imdb_recortado %>% filter(num_avaliacoes > 10000)
+
+# filtrando com & - basta usar a vírgula!
+imdb_recortado %>% 
+  filter(num_avaliacoes > 100000,
+         nota_imdb >= 9) %>% 
+  arrange(desc(nota_imdb))
+
+# filtrando com OU |
+imdb_recortado %>% 
+  filter(num_avaliacoes > 100000 |
+         nota_imdb >= 9) %>% 
+  arrange(desc(nota_imdb))
 
 
 # Vendo categorias de uma variável
 unique(imdb$pais) # saída é um vetor
 imdb %>% distinct(pais) # saída é uma tibble
 
+# detect
+# install.packages("devtools")
+# devtools::install_github("curso-r/basesCursoR")
+imdb_original <- basesCursoR::pegar_base("imdb")
+
+imdb_original %>% 
+  filter(pais == "Brazil") %>% View()
+
+imdb_original %>% 
+  filter(str_detect(pais, "Brazil")) 
+
+# str_view_all(imdb_original$pais, "Spain")
+
 # Filtrando duas colunas da base
 
 ## Recentes e com nota alta
-imdb %>% filter(nota_imdb > 9, num_avaliacoes > 10000)
-imdb %>% filter(ano > 2010, nota_imdb > 8.5)
-imdb %>% filter(ano > 2010 & nota_imdb > 8.5)
+imdb %>% filter(nota_imdb >= 9, num_avaliacoes > 10000) %>% View()
+imdb %>% filter(ano > 2010, nota_imdb > 8.5) %>% View()
+imdb %>% filter(ano > 2010 & nota_imdb > 8.5) %>% View()
 
 ## Gastaram menos de 100 mil, faturaram mais de 1 milhão
-imdb %>% filter(orcamento < 100000, receita > 1000000)
+imdb %>% filter(orcamento < 100000, receita > 1000000) %>% View()
 
 ## Lucraram
-imdb %>% filter(receita - orcamento > 0)
+imdb %>% filter(receita - orcamento > 0) %>% View()
 
 ## Lucraram mais de 500 milhões OU têm nota muito alta
-imdb %>% filter(receita - orcamento > 500000000 | nota_imdb > 9)
+imdb %>% filter(receita - orcamento > 500000000 | nota_imdb > 9) %>% View()
+
+
 
 # O operador %in%
-imdb %>% filter(direcao %in% c('Matt Reeves', "Christopher Nolan"))
+# podemos fazer com OU |
+imdb %>% 
+  filter(direcao == "Matt Reeves" | 
+           direcao == "Christopher Nolan" | 
+           direcao == "Quentin Tarantino")
+
+# mas com %in% fica mais elegante!
+imdb %>% filter(direcao %in% c('Matt Reeves', 
+                               "Christopher Nolan", 
+                               "Quentin Tarantino")) %>% View()
+imdb %>% 
+  filter(direcao != "Andrew Stanton") %>% View()
 
 # Negação
 imdb %>% filter(direcao %in% c("Quentin Tarantino", "Steven Spielberg"))
-imdb %>% filter(!direcao %in% c("Quentin Tarantino", "Steven Spielberg"))
+imdb %>% filter(!direcao %in% c("Quentin Tarantino", "Steven Spielberg")) %>% View()
+
+
+# Super filtro!
+# detect
+# detect com mais de um valor!
+# negacao
+imdb %>% 
+  filter(!str_detect(direcao, "Quentin Tarantino|Steven Spielberg")) %>% View()
 
 # O que acontece com o NA?
 df <- tibble(x = c(1, NA, 3))
 
-filter(df, x > 1)
+filter(df, x > 1) # por padrao, o filter REMOVEU os NAs!
+
+# aqui estou sendo explicita dizendo
+# que eu quero que o NA seja mantido!
 filter(df, is.na(x) | x > 1)
 
 # Filtrando texto sem correspondência exata
@@ -326,6 +388,7 @@ filter(df, is.na(x) | x > 1)
 textos <- c("a", "aa","abc", "bc", "A", NA)
 
 str_detect(textos, pattern = "a")
+str_view_all(textos, pattern = "a")
 
 ## Pegando os seis primeiros valores da coluna "generos"
 imdb$generos[1:6]
@@ -335,13 +398,21 @@ str_detect(
   pattern = "Drama"
 )
 
+imdb %>% 
+  filter(str_detect(
+    generos, "Sci-Fi"
+  )) %>% View()
+
 ## Pegando apenas os filmes que 
 ## tenham o gênero ação
-imdb %>% filter(str_detect(generos, "Action")) 
+imdb %>% filter(str_detect(generos, "Action")) %>% View()
 
 # mutate ------------------------------------------------------------------
 
 # Modificando uma coluna
+
+# base %>% 
+# mutate(nome_que_a_coluna_vai_ficar = operacao_que_queremos_fazer)
 
 imdb %>% 
   mutate(duracao = duracao/60) %>% 
@@ -357,14 +428,28 @@ imdb %>%
   mutate(lucro = receita - orcamento) %>% 
   View()
 
+
+imdb %>% 
+  drop_na(receita, orcamento) %>% 
+  mutate(lucro = receita - orcamento) %>% 
+  View()
+  
+  
 # A função ifelse é uma ótima ferramenta
 # para fazermos classificação binária
 
-imdb %>% mutate(
+imdb %>%
+  drop_na(receita, orcamento) %>% 
+  mutate(
   lucro = receita - orcamento,
-  houve_lucro = ifelse(lucro > 0, "Sim", "Não")
+  houve_lucro = ifelse(test = lucro > 0, # teste que faremos
+                       yes = "Sim", # se for verdadeiro
+                       no =  "Não" # se for falso!
+                       )
 ) %>% 
   View()
+
+
 
 # summarise ---------------------------------------------------------------
 
