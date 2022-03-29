@@ -5,7 +5,7 @@ params:
   trilha_clean: programacao_para_ciencia_de_dados
   turma: 202203-r4ds-1
   nome_curso: R para Ciência de Dados I
-  num_aula: '4'
+  num_aula: '5'
   download_material: 'TRUE'
 ---
 
@@ -90,7 +90,8 @@ knitr::kable(
     )
   ) |> 
     dplyr::mutate(script = glue::glue("[{script}]({link})")) |> 
-    dplyr::select(script)
+    dplyr::select(script) %>% 
+    dplyr::slice(1:4)
 )
 ```
 

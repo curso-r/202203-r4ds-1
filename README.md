@@ -3,28 +3,28 @@
 
 ## Informações importantes
 
-  - [Clique
+-   [Clique
     aqui](https://github.com/curso-r/main-r4ds-1/raw/master/material_do_curso.zip)
     para baixar o material do curso.
 
-  - Nosso blog: <https://curso-r.com/blog/>
+-   Nosso blog: <https://curso-r.com/blog/>
 
-  - Nossos livros: [Ciência de Dados em R](https://livro.curso-r.com/) e
+-   Nossos livros: [Ciência de Dados em R](https://livro.curso-r.com/) e
     [Zen do R](https://curso-r.github.io/zen-do-r/)
 
 ## Dúvidas
 
 Fora do horário de aula ou monitoria:
 
-  - perguntas gerais sobre o curso deverão ser feitas no Classroom.
+-   perguntas gerais sobre o curso deverão ser feitas no Classroom.
 
-  - perguntas sobre R, principalmente as que envolverem código, deverão
+-   perguntas sobre R, principalmente as que envolverem código, deverão
     ser enviadas no [nosso fórum](https://discourse.curso-r.com/).
 
 ## Slides
 
 | slides                                                                                                  | pdf                                                                                                   |
-| :------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------- |
+|:--------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------|
 | [01-introducao-ao-curso.html](https://curso-r.github.io/main-r4ds-1/slides/01-introducao-ao-curso.html) | [01-introducao-ao-curso.pdf](https://curso-r.github.io/main-r4ds-1/slides/01-introducao-ao-curso.pdf) |
 | [02-introducao-ao-r.html](https://curso-r.github.io/main-r4ds-1/slides/02-introducao-ao-r.html)         | [02-introducao-ao-r.pdf](https://curso-r.github.io/main-r4ds-1/slides/02-introducao-ao-r.pdf)         |
 | [03-importacao.html](https://curso-r.github.io/main-r4ds-1/slides/03-importacao.html)                   | [03-importacao.pdf](https://curso-r.github.io/main-r4ds-1/slides/03-importacao.pdf)                   |
@@ -34,27 +34,28 @@ Fora do horário de aula ou monitoria:
 ## Scripts utilizados em aula
 
 | script                                                                                                                                  |
-| :-------------------------------------------------------------------------------------------------------------------------------------- |
+|:----------------------------------------------------------------------------------------------------------------------------------------|
 | [scripts/01-introducao-ao-R.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/scripts/01-introducao-ao-R.R)               |
 | [scripts/02-importacao.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/scripts/02-importacao.R)                         |
 | [scripts/03-2-valores-especiais-NA.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/scripts/03-2-valores-especiais-NA.R) |
 | [scripts/03-manipulacao.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/scripts/03-manipulacao.R)                       |
 
-  - Parte prática:
+-   Parte prática:
 
-| script                                                                                                              |
-| :------------------------------------------------------------------------------------------------------------------ |
-| [pratica/aula\_2.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_2.R)                  |
-| [pratica/aula\_3.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_3.R)                  |
-| [pratica/aula\_4.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_4.R)                  |
-| [pratica/dicas\_de\_bases.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/dicas_de_bases.R) |
+| script                                                                                                            |
+|:------------------------------------------------------------------------------------------------------------------|
+| [pratica/aula_2.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_2.R)                 |
+| [pratica/aula_3.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_3.R)                 |
+| [pratica/aula_4.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_4.R)                 |
+| [pratica/aula_5.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_5.R)                 |
+| [pratica/dicas_de_bases.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/dicas_de_bases.R) |
 
 ## Lição de casa
 
 ### Tarefas sugeridas
 
 | Aula | Descrição                                                                                                                               | Respostas                                                                |
-| ---: | :-------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------- |
+|-----:|:----------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------|
 |    1 | [Ler e fazer os exercícios — R como calculadora](https://livro.curso-r.com/3-2-r-como-calculadora.html)                                 | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html)           |
 |    1 | [Ler e fazer os exercícios — Objetos](https://livro.curso-r.com/3-3-objetosfuncoes)                                                     | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html)           |
 |    2 | [Ler e fazer os exercícios — Classes](https://livro.curso-r.com/3-5-classes.html)                                                       | [Respostas](https://livro.curso-r.com/13-1-r-b%C3%A1sico.html)           |
@@ -65,11 +66,13 @@ Fora do horário de aula ou monitoria:
 |    3 | [Ler e fazer os exercícios — Pipe](https://livro.curso-r.com/7-2-dplyr.html#o-pipe-em-a%C3%A7%C3%A3o)                                   | [Respostas](https://livro.curso-r.com/13-4-o-pacote-dplyr.html)          |
 |    4 | [Ler e fazer os exercícios — Criando/modificando colunas](https://livro.curso-r.com/7-2-dplyr.html#modificando-e-criando-novas-colunas) | [Respostas](https://livro.curso-r.com/13-4-o-pacote-dplyr.html)          |
 |    4 | [Ler e fazer os exercícios — Filtrando linhas](https://livro.curso-r.com/7-2-dplyr.html#filtrando-linhas)                               | [Respostas](https://livro.curso-r.com/13-4-o-pacote-dplyr.html)          |
+|    5 | [Ler e fazer os exercícios — Sumarizando a base](https://livro.curso-r.com/7-2-dplyr.html#sumarizando-a-base)                           | [Respostas](https://livro.curso-r.com/13-4-o-pacote-dplyr.html)          |
+|    5 | [Ler e fazer os exercícios — Joins](https://livro.curso-r.com/7-2-dplyr.html#juntando-duas-bases)                                       | [Respostas](https://livro.curso-r.com/13-4-o-pacote-dplyr.html)          |
 
 ### Leituras sugeridas
 
 | Aula | Descrição                                                                                                                 |
-| ---: | :------------------------------------------------------------------------------------------------------------------------ |
+|-----:|:--------------------------------------------------------------------------------------------------------------------------|
 |    1 | [Ler a seção “Pedindo ajuda”](https://livro.curso-r.com/3-1-pedindo-ajuda.html)                                           |
 |    1 | [Ler a seção “Data frames”](https://livro.curso-r.com/3-4-data-frames.html)                                               |
 |    2 | [Ler - Capítulo do RStudio (tópicos 2.1, 2.2 e 2.3 - telas, atalhos, projetos)](https://livro.curso-r.com/2-rstudio.html) |
@@ -77,7 +80,7 @@ Fora do horário de aula ou monitoria:
 ### Tarefas complementares
 
 | Aula | Descrição                                                                                                                                                                |
-| ---: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |    2 | [\[OPCIONAL\] Para quem não fez o curso Introdução à programação com R: Exercícios de introdução ao R](https://acursor.shinyapps.io/intro-programacao_introducao/)       |
 |    2 | [\[OPCIONAL\] Para quem não fez o curso Introdução à programação com R: Exercícios de introdução aos dataframes](https://acursor.shinyapps.io/intro-programacao_tabelas) |
 |    3 | [Ler e fazer os exercícios — Testes lógicos](https://livro.curso-r.com/3-7-testes-l%C3%B3gicos.html)                                                                     |
@@ -89,7 +92,7 @@ que comentamos quando tiramos dúvidas (não necessariamente são
 relacionadas com o conteúdo da aula).
 
 | Aula | Tema                 | Descrição                                                                                                                                                          |
-| ---: | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----:|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |    0 | Instalação           | [Capítulo do livro “Ciência de Dados em R”: Instalação](https://livro.curso-r.com/1-instalacao.html)                                                               |
 |    1 | Comunidades          | [R-Ladies - Dashboard](https://benubah.github.io/r-community-explorer/rladies.html)                                                                                |
 |    1 | Comunidades          | [Apresentação sobre a R-Ladies São Paulo](https://r-ladies-sao-paulo.github.io/RLadiesTheme/)                                                                      |
@@ -121,6 +124,7 @@ relacionadas com o conteúdo da aula).
 |    3 | Pipe                 | [Post sobre o pipe nativo - Blog da Bea](https://beatrizmilz.com/blog/2021-05-18-experimentando-o-r-410/)                                                          |
 |    3 | Pipe                 | [Post sobre o pipe nativo - Blog da Curso-R](https://blog.curso-r.com/posts/2021-05-06-o-novo-pipe-esta-chegando/)                                                 |
 |    3 | Referências gerais   | [Guia de estilo: Tidyverse](https://style.tidyverse.org/)                                                                                                          |
+|    3 | Gráficos             | [Pacotes do tidyverse](https://www.tidyverse.org/packages/)                                                                                                        |
 |    4 | Extra - Bases        | [Post sobre o base dos dados](https://blog.curso-r.com/posts/2021-05-28-basedosdados/)                                                                             |
 |    4 | Manipulação de bases | [Fatiar a base de dados com slice](https://dplyr.tidyverse.org/reference/slice.html)                                                                               |
 |    4 | Manipulação de bases | [Vignette do dplyr - introdução](https://dplyr.tidyverse.org/articles/dplyr.html)                                                                                  |
@@ -130,6 +134,18 @@ relacionadas com o conteúdo da aula).
 |    4 | Extra - Bases        | [Pacote dados - Base de dados traduzidas](https://cienciadedatos.github.io/dados/)                                                                                 |
 |    4 | Extra - Bases        | [Bases de dados no Kaggle](https://www.kaggle.com/datasets)                                                                                                        |
 |    4 | Extra - Bases        | [Bases de dados no tidytuesday](https://github.com/rfordatascience/tidytuesday#datasets)                                                                           |
+|    5 | Manipulação de bases | [Animações sobre dplyr + Join](https://www.garrickadenbuie.com/project/tidyexplain/)                                                                               |
+|    5 | Manipulação de bases | [Pacote abjutils - Remover acentos de textos](https://github.com/abjur/abjutils)                                                                                   |
+|    5 | Manipulação de bases | [Pacote dbplyr: dplyr para quem usa SQL](https://dbplyr.tidyverse.org/articles/translation-verb.html)                                                              |
+|    5 | Joins - Unindo bases | [imagem sobre join](https://d33wubrfki0l68.cloudfront.net/aeab386461820b029b7e7606ccff1286f623bae1/ef0d4/diagrams/join-venn.png)                                   |
+|    5 | Limpeza de bases     | [Post sobre o pacote janitor](https://blog.curso-r.com/posts/2017-07-24-janitor/)                                                                                  |
+|    5 | Fatores              | [Folha de cola (cheatsheet): forcats](https://raw.githubusercontent.com/rstudio/cheatsheets/master/factors.pdf)                                                    |
+|    5 | Joins - Unindo bases | [Joins: juntando bases de dados](https://youtu.be/xnUo25VRH70)                                                                                                     |
+|    5 | Joins - Unindo bases | [Tidyexplain - Ilustrações sobre joins](https://www.garrickadenbuie.com/project/tidyexplain/)                                                                      |
+|    5 | Joins - Unindo bases | [Documentação sobre joins](https://dplyr.tidyverse.org/reference/join.html)                                                                                        |
+|    5 | Joins - Unindo bases | [Post que usa join com bases com chave desarrumada](https://beatrizmilz.com/blog/2020-07-27-criando-mapas-com-os-pacotes-tidyverse-e-geobr/)                       |
+|    5 | Boas práticas        | [Capítulo do livro “Zen do R”: .RData e .Rhistory](https://curso-r.github.io/zen-do-r/rdata-rhistory.html)                                                         |
+|    5 | Gráficos             | [Post sobre o pacote esquisse](https://blog.curso-r.com/posts/2022-03-22-esquisse/)                                                                                |
 
 ## Redes sociais da Curso-R
 
