@@ -9,7 +9,7 @@ imdb <- read_rds("dados/imdb.rds")
 
 # Jeito de ver a base -----------------------------------------------------
 
-glimpse(imdb)
+glimpse(imdb) 
 names(imdb)
 View(imdb)
 
@@ -455,45 +455,87 @@ imdb %>%
 
 # Sumarizando uma coluna
 
+# imdb %>% 
+#   # vai fazendo linha a linha
+#   mutate(nome_da_coluna_a_ser_criada = operacao_para_criar_coluna)
+
+# imdb %>% 
+#   summarise(nome_da_coluna_a_ser_criada = operacao_para_criar_coluna)
+
 imdb %>% 
   summarise(media_orcamento = mean(orcamento, na.rm = TRUE))
 
+imdb %>% 
+  summarise(media_nota = mean(nota_imdb, na.rm = TRUE))
+
 # repare que a saída ainda é uma tibble
 
+# é equivalente à :
+round(mean(imdb$nota_imdb, na.rm = TRUE), 2)
 
 # Sumarizando várias colunas
 imdb %>% summarise(
   media_orcamento = mean(orcamento, na.rm = TRUE),
   media_receita = mean(receita, na.rm = TRUE),
-  media_lucro = mean(receita - orcamento, na.rm = TRUE)
+  media_lucro = mean(receita - orcamento, na.rm = TRUE),
+  media_nota = mean(nota_imdb, na.rm = TRUE)
 )
 
 # Diversas sumarizações da mesma coluna
-imdb %>% summarise(
-  media_orcamento = mean(orcamento, na.rm = TRUE),
-  mediana_orcamento = median(orcamento, na.rm = TRUE),
-  variancia_orcamento = var(orcamento, na.rm = TRUE)
-)
+imdb %>%
+  summarise(
+    media_nota = mean(nota_imdb, na.rm = TRUE),
+    mediana_nota = median(nota_imdb, na.rm = TRUE),
+    variancia_nota = var(nota_imdb, na.rm = TRUE),
+    desvio_padrao_nota = sd(nota_imdb, na.rm = TRUE),
+    nota_minima = min(nota_imdb, na.rm = TRUE),
+    nota_maxima = max(nota_imdb, na.rm = TRUE),
+    quantidade_de_filmes = n()
+  ) 
 
 # Tabela descritiva
 imdb %>% summarise(
   media_orcamento = mean(orcamento, na.rm = TRUE),
   media_receita = mean(receita, na.rm = TRUE),
   qtd = n(),
-  qtd_direcao = n_distinct(direcao)
+  qtd_direcao = n_distinct(direcao), 
+  qtd_produtoras = n_distinct(producao)
 )
 
 
-# funcoes que transformam -> N valores
-log(1:10)
-sqrt()
-str_detect()
+# entendendo n_distinct
+# com R base
+unique(imdb$direcao) %>% length()
+# Com dplyr
+imdb %>% 
+  # busca valores distintos em uma coluna
+  distinct(direcao) %>% 
+  nrow() # conta o numero de linhas
+  
 
-# funcoes que sumarizam -> 1 valor
+# funcoes que transformam -> N valores (SÃO BOAS PARA USAR COM MUTATE!!)
+log(1:10)
+sqrt(2:10)
+str_detect(string = c("Segunda-feira", "Domingo", "Sábado", "Quarta-feira"),
+           pattern = "feira")
+
+# funcoes que sumarizam -> 1 valor (SÃO BOAS PARA USAR COM SUMMARISE!!)
 mean(c(1, NA, 2))
 mean(c(1, NA, 2), na.rm = TRUE)
-n_distinct()
+mean(imdb$nota_imdb, na.rm = TRUE)
+# n_distinct()
+# n()
 
+imdb %>% 
+  filter(str_detect(elenco, "Will Smith")) %>% 
+  summarise(
+    nome_filmes = knitr::combine_words(titulo),
+    nome_filmes_tunado = knitr::combine_words(titulo, and = " e " ,
+                                              oxford_comma = FALSE),
+    numero_filmes = n(),
+    nota_media = mean(nota_imdb),
+    qnt_produtoras = n_distinct(producao)
+    ) 
 
 # group_by + summarise ----------------------------------------------------
 
@@ -501,17 +543,58 @@ n_distinct()
 
 imdb %>% group_by(producao)
 
-# Agrupando e sumarizando
 imdb %>% 
+  group_by(producao) %>% 
+  # fazer alguma operacao
+  ungroup()
+
+# Agrupando e sumarizando: estudios de producao
+# que fizeram mais de 10 filmes, ordenados por 
+# lucro medio
+resumo_estudios_producao <- imdb %>% 
+  drop_na(producao) %>% 
+  mutate(lucro = receita - orcamento) %>% 
   group_by(producao) %>% 
   summarise(
     media_orcamento = mean(orcamento, na.rm = TRUE),
     media_receita = mean(receita, na.rm = TRUE),
+    media_lucro = mean(lucro, na.rm = TRUE),
+    media_nota = mean(nota_imdb, na.rm = TRUE),
     qtd = n(),
     qtd_direcao = n_distinct(direcao)
   ) %>%
-  arrange(desc(qtd)) 
+  arrange(desc(media_lucro)) %>%
+  filter(qtd > 10) %>% 
+  view()
+
+# perguntaram como exportar isso pro excel!
+writexl::write_xlsx(
+  resumo_estudios_producao,
+  path = "dados_exportados/resumo_estudios_producao.xlsx"
+)
+
+# e como ler depois?
+importando_excel <- readxl::read_excel("dados_exportados/resumo_estudios_producao.xlsx")
   
+
+# exemplo count() - equivalencia com outras funcoes
+
+imdb %>% 
+  group_by(producao) %>% 
+  summarise(numero_filmes = n()) %>% 
+  arrange(desc(numero_filmes))
+
+imdb %>% 
+  count(producao)
+
+imdb %>% 
+  count(producao, sort = TRUE)
+
+imdb %>% 
+  drop_na(producao) %>% 
+  count(producao, sort = TRUE) %>% 
+  slice_head(n = 10)
+
   
 # left join ---------------------------------------------------------------
 
@@ -519,22 +602,34 @@ imdb %>%
 # tabelas a partir de uma chave. 
 # Vamos ver um exemplo bem simples.
 
+# as colunas de chave precisam ter o mesmo tipo! ex: texto, número, etc.
+
 band_members
 band_instruments
 
-band_members %>% left_join(band_instruments)
+band_members %>% left_join(band_instruments) 
+
 band_instruments %>% left_join(band_members)
+
+# dá para usar sem pipe!!
+left_join(band_members, band_instruments)
 
 # o argumento 'by'
 band_members %>% left_join(band_instruments, by = "name")
 
-# OBS: existe uma família de joins
 
+# mutate(nome_da_coluna = as.character(nome_da_coluna))
+
+# OBS: existe uma família de joins
+# mais usado
 band_instruments %>% left_join(band_members)
+# pouco usado
 band_instruments %>% right_join(band_members)
+
+# esses três são mais usados para verificar se o join deu certo
 band_instruments %>% inner_join(band_members)
 band_instruments %>% full_join(band_members)
-
+band_instruments %>% anti_join(band_members)
 
 # Um exemplo usando a outra base do imdb
 
@@ -543,5 +638,14 @@ imdb_avaliacoes <- read_rds("dados/imdb_avaliacoes.rds")
 
 imdb %>% 
   left_join(imdb_avaliacoes, by = "id_filme") %>%
-  View()
+  # select(titulo, num_avaliacoes.x, num_avaliacoes.y)
+  select(- num_avaliacoes.y) %>% 
+  rename(num_avaliacoes = num_avaliacoes.x ) %>% View()
 
+
+# exemplo de recorte da base
+
+imdb %>% 
+  slice_sample(n = 100) %>% 
+  write_rds("dados_exportados/exemplo_imdb_recortada.RDS")
+  
