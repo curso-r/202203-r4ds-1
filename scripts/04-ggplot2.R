@@ -1,4 +1,3 @@
-
 # Carregar pacotes --------------------------------------------------------
 
 library(tidyverse)
@@ -23,14 +22,23 @@ p <- imdb %>%
 
 # Gráfico de dispersão da receita contra o orçamento
 imdb %>% 
-  ggplot() +
+  ggplot() + # ATENÇÃO, NÃO USAR PIPE DEPOIS DE ggplot()
   geom_point(aes(x = orcamento, y = receita))
+
 
 # Inserindo a reta x = y
 imdb %>%
   ggplot() +
   geom_point(aes(x = orcamento, y = receita)) +
   geom_abline(intercept = 0, slope = 1, color = "red")
+
+# uma linha reta!
+imdb %>%
+  ggplot() +
+  geom_point(aes(x = orcamento, y = receita)) +
+  geom_abline(intercept = 1000000000, slope = 0, color = "red")
+
+
 
 # Observe como cada elemento é uma camada do gráfico.
 # Agora colocamos a camada da linha antes da camada
@@ -44,16 +52,20 @@ imdb %>%
 imdb %>%
   ggplot() +
   geom_point(aes(x = orcamento, y = receita, color = lucro))
+# color = contorno. 
 
 # Categorizando o lucro antes
 imdb %>%
   mutate(
     lucrou = ifelse(lucro <= 0, "Não", "Sim")
-  ) %>%
+  ) %>% 
   ggplot() +
   geom_point(aes(x = orcamento, y = receita, color = lucrou))
 
 # Salvando um gráfico em um arquivo
+dir.create("graficos_exportados")
+
+
 imdb %>%
   mutate(
     lucrou = ifelse(lucro <= 0, "Não", "Sim")
@@ -61,7 +73,7 @@ imdb %>%
   ggplot() +
   geom_point(aes(x = orcamento, y = receita, color = lucrou))
 
-ggsave("meu_grafico.png")
+ggsave("graficos_exportados/meu_grafico.png")
 
 
 # Filosofia ---------------------------------------------------------------
@@ -137,20 +149,74 @@ imdb %>%
 # Número de filmes das pessoas que dirigiram filmes na base
 imdb %>% 
   count(direcao) %>%
-  top_n(10, n) %>%
+  # top_n(10, n) %>% essa funcao está se aposentando
+  slice_max(n, n = 10) %>% # essa funcao é a mais indicada agora!
   ggplot() +
   geom_col(aes(x = direcao, y = n))
 
+
+
+# o geom bar existe mas só aceita 1 atributo x ou y!
+# cuidado para nao confundir!
+diretores_top10 <- imdb %>% 
+  count(direcao) %>%
+  # top_n(10, n) %>% essa funcao está se aposentando
+  slice_max(n, n = 10) %>% 
+  pull(direcao)
+
+imdb %>% 
+  filter(direcao %in% diretores_top10) %>% 
+  ggplot() +
+  geom_bar(aes(x = direcao))
+
+# voltando no geom_col...
 # Tirando NA e pintando as barras
 imdb %>% 
-  count(direcao) %>%
+  count(direcao) %>% 
   filter(!is.na(direcao)) %>% 
-  top_n(10, n) %>%
+  slice_max(n, n = 10) %>%
   ggplot() +
   geom_col(
-    aes(x = direcao, y = n, fill = direcao),
+    # dentro do aes: variáveis da nossa base!
+    aes(x = direcao, y = n, fill = direcao), # fill é a cor do preenchimento
+    color = "black", # cor da borda
     show.legend = FALSE
   )
+
+imdb %>% 
+  count(direcao) %>% 
+  filter(!is.na(direcao)) %>% 
+  slice_max(n, n = 10) %>%
+  ggplot() +
+  geom_col(
+    aes(x = direcao, y = n), 
+    color = "black", # cor da borda
+    fill = "lightblue",# fill é a cor do preenchimento 
+    # fora do aes todo mundo fica com a mesma cor!
+    show.legend = FALSE
+  )
+
+# exemplo com escala de cores
+imdb %>% 
+  count(direcao) %>% 
+  filter(!is.na(direcao)) %>% 
+  slice_max(n, n = 10) %>%
+  ggplot() +
+  geom_col(
+    # dentro do aes: variáveis da nossa base!
+    aes(x = direcao, y = n, fill = direcao), # fill é a cor do preenchimento
+    color = "black", # cor da borda
+    show.legend = FALSE
+  ) +
+  scale_fill_viridis_d()
+
+# mapeando as cores! ---
+# fill = preencher (pintar dentro) do geom
+# color = é o contorno! também é util pra grafico de pontos e linha.
+
+# eles podem ser usados dentro ou fora do aes().
+# se for dentro, a gente usa para mapear uma variável/coluna
+# se for fora do aes, a gente usa a mesma cor para todos os elementos
 
 # Invertendo as coordenadas
 imdb %>% 
@@ -171,7 +237,8 @@ imdb %>%
   top_n(10, n) %>%
   mutate(
     direcao = forcats::fct_reorder(direcao, n)
-  ) %>% 
+  ) %>%
+  #arrange(direcao)
   ggplot() +
   geom_col(
     aes(x = n, y = direcao, fill = direcao),
