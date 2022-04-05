@@ -116,6 +116,10 @@ knitr::kable(
 )
 ```
 
+Extra:
+
+- [pratica/aula_7.html](https://curso-r.github.io/202203-r4ds-1/pratica/aula_7.html)
+
 ## Lição de casa
 
 ```{r echo=FALSE, message=FALSE}

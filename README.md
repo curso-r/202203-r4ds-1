@@ -56,6 +56,10 @@ Fora do horário de aula ou monitoria:
 | [pratica/aula_7.Rmd](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_7.Rmd)             |
 | [pratica/dicas_de_bases.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/dicas_de_bases.R) |
 
+Extra:
+
+-   [pratica/aula_7.html](https://curso-r.github.io/202203-r4ds-1/pratica/aula_7.html)
+
 ## Lição de casa
 
 ### Tarefas sugeridas
