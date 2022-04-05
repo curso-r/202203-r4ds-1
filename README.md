@@ -58,7 +58,7 @@ Fora do horário de aula ou monitoria:
 
 Extra:
 
--   [pratica/aula_7.html](https://curso-r.github.io/202203-r4ds-1/pratica/aula_7.html)
+  - [pratica/aula\_7.html](https://curso-r.github.io/202203-r4ds-1/pratica/aula_7.html)
 
 ## Lição de casa
 
