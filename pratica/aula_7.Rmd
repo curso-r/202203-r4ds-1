@@ -1,0 +1,141 @@
+---
+title: "Exemplo feito na aula prática de R Markdown"
+author: "Beatriz e Tereza"
+date: "4/4/2022"
+output: 
+  prettydoc::html_pretty:
+    theme: architect
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE,
+	dpi = 600
+)
+```
+
+```{r importacao}
+library(tidyverse)
+library(harrypotter)
+#imdb <- read_rds("../dados/imdb.rds")
+imdb <- basesCursoR::pegar_base("imdb")
+```
+
+```{r}
+filmes_harry_potter <- imdb %>% 
+ filter(str_detect(titulo_original, "Harry Potter")) %>% 
+  mutate(data_lancamento = parse_date(data_lancamento),
+         nome_curto = str_remove(titulo_original, "Harry Potter and the "))
+```
+
+```{r}
+nome_dos_filmes <- filmes_harry_potter %>% 
+  arrange(ano) %>% 
+  summarise(titulos = knitr::combine_words(titulo_original, and =  " e ", oxford_comma = FALSE)) %>% 
+  pull(titulos)
+```
+
+
+A série Harry Potter fez muito sucesso com os seus `r nrow(filmes_harry_potter)` filmes, sendo eles: `r nome_dos_filmes` .
+
+```{r }
+#| fig.align = "center",
+#| out.width = "50%",
+#| fig.cap = "Foto dos personagens principais do filme Harry Potter: Harry, Hermione e Rony"
+knitr::include_graphics("https://sm.ign.com/t/ign_br/news/h/heres-our-/heres-our-first-look-at-harry-potter-20th-anniversary-return_8y39.1200.jpg")
+```
+## Tabelas!
+
+```{r}
+base_tabela <- filmes_harry_potter %>% 
+  mutate(lucro = receita - orcamento) %>% 
+  arrange(desc(lucro)) %>% 
+  select(titulo_original, ano, lucro) %>% 
+  mutate(lucro = scales::dollar(lucro)) 
+```
+
+### Tabela com knitr
+
+```{r}
+base_tabela %>% 
+  knitr::kable(col.names = c("Titulo", "Ano", "Lucro em dólares"))
+```
+
+### Tabela com DT
+
+```{r}
+base_tabela %>% 
+  DT::datatable(options = list(scrollX = TRUE))
+```
+
+### gt
+
+```{r}
+base_tabela %>%
+  gt::gt()
+```
+
+
+
+### reactable
+
+```{r}
+base_tabela %>%
+  reactable::reactable()
+```
+
+## Gráficos
+
+```{r}
+grafico_lucro <- filmes_harry_potter %>% 
+  mutate(lucro = receita - orcamento,
+         lucro_mi = lucro/1000000) %>% 
+  ggplot() +
+  geom_point(aes(x = data_lancamento, y = lucro_mi, color = nome_curto), show.legend = FALSE) + 
+  theme_bw() +
+ #scale_color_discrete() 
+  harrypotter::scale_color_hp_d(option = "Gryffindor") +
+  labs(x = "Ano", y = "Lucro (em milhões de $) \n", color = "Filme")  + 
+  scale_y_continuous(label = function(x) paste0("$ ", x, " mi")) 
+  
+```
+
+```{r}
+grafico_nota <-filmes_harry_potter %>% 
+  ggplot() +
+  geom_point(aes(x = data_lancamento, y = nota_imdb, color = nome_curto)) + 
+  theme_bw() +
+ #scale_color_discrete() 
+  harrypotter::scale_color_hp_d(option = "Gryffindor") +
+  labs(x = "Ano", y = "Nota IMDB",  color = "Filme") 
+```
+
+```{r}
+library(patchwork)
+
+grafico_lucro + grafico_nota
+```
+
+## Equações
+
+[Neste link](https://app.mettzer.com/latex) podemos consultar mais sobre como colocar equações no RMarkdown usando LaTeX! E também podemos consultar [essa apostila sobre LaTeX](http://each.uspnet.usp.br/sarajane/wp-content/uploads/2016/10/manual-latex-1.pdf).
+
+
+$$\dfrac{10}{2}$$
+
+Nós calculamos o valor com ... $\dfrac{10}{2}$ ...
+
+
+$${\text{Média}=\frac {a_{1}+a_{2}+\cdots +a_{n}}{n}}$$
+
+
+
+## Espero que tenha gostado!
+
+```{r}
+#| fig.align = "center"
+knitr::include_graphics("https://media.giphy.com/media/pI2paNxecnUNW/giphy.gif")
+```
+

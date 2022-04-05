@@ -100,19 +100,53 @@ imdb %>%
   geom_point(aes(x = orcamento, y = receita)) +
   labs(x = expression(Área~(m^2)),
        y = expression(R[2])
-     # y = expression(#sigma,
+      # y = expression(sigma,
       #               lambda,
-     #                 omega )
+      #                 omega )
     
         )
 
-#_ preciso fazer um gráfico assim (dispersao com uma reta) pro trabalho e 
+
+# é possível denotar 1 milhão como "1 mi" e 1 bilhão como "1 bi". 
+# Ou melhor, dá pra personalizar?
+imdb %>% 
+  group_by(ano) %>% 
+  summarise(receita_media = mean(receita, na.rm = TRUE)) %>% 
+  mutate(receita_media_milhoes = receita_media/1000000) %>%
+  ggplot() +
+  geom_line(aes(x = ano, y = receita_media_milhoes)) + 
+  scale_y_continuous(label = function(x) paste0(x, " mi"))
+
+# Como distanciar o titulo do eixo y ou x?
+
+# usando \n
+imdb %>% 
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = ano, y = nota_media)) +
+  theme_minimal() + 
+  labs(y = "Nota média \n", x = "\n Ano")
+
+# usando a funcao theme() - (e olhando na documentacao!)
+library(ggplot2)
+imdb %>%
+  group_by(ano) %>%
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>%
+  ggplot() +
+  geom_line(aes(x = ano, y = nota_media)) +
+  theme_minimal() +
+  theme(axis.title.x = element_text(margin = margin(t = 10)),
+        axis.title.y = element_text(margin = margin(r = 10))
+        )
+
+# bom livro!
+# https://ggplot2-book.org/index.html
+
+
+
+# preciso fazer um gráfico assim (dispersao com uma reta) pro trabalho e 
 # nomear os pontos  que ficaram acima da reta :)
 
 
 # A gente pode escolher a cor do fill dentro do aes?
-
-# qual é o nome oficial da escala de cores padrao do ggplot2?
-
-# é possível denotar 1 milhão como "1 mi" e 1 bilhão como "1 bi". 
-# Ou melhor, dá pra personalizar?
