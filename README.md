@@ -54,6 +54,7 @@ Fora do horário de aula ou monitoria:
 | [pratica/aula\_5.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_5.R)                  |
 | [pratica/aula\_6.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_6.R)                  |
 | [pratica/aula\_7.Rmd](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_7.Rmd)              |
+| [pratica/aula\_8.Rmd](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/aula_8.Rmd)              |
 | [pratica/dicas\_de\_bases.R](https://raw.githubusercontent.com/curso-r/202203-r4ds-1/main/pratica/dicas_de_bases.R) |
 
 Extra:
