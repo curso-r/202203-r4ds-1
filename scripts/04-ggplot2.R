@@ -272,38 +272,58 @@ imdb %>%
   geom_histogram(aes(x = lucro))
 
 # Arrumando o tamanho das bases
-imdb %>% 
-  filter(direcao == "Steven Spielberg") %>%
+imdb %>%
+ filter(direcao == "Steven Spielberg") %>%
+  mutate(lucro_milhoes = lucro/1000000) %>% 
   ggplot() +
-  geom_histogram(
-    aes(x = lucro), 
-    binwidth = 100000000,
-    color = "white"
-  )
+  geom_histogram(aes(x = lucro_milhoes),
+                binwidth = 200,
+                 color = "white",
+                 fill = "lightgreen") + 
+  theme_classic()
+
+# Com R base - todos os filmes!
+hist(imdb$lucro)
 
 # Boxplot do lucro dos filmes das pessoas que dirigiram
-# mais de 30 filmes
+# mais de 15 filmes que sabemos informacao sobre o lucro!
 imdb %>% 
-  filter(!is.na(direcao)) %>%
+  tidyr::drop_na(direcao, lucro) %>% 
   group_by(direcao) %>% 
-  filter(n() >= 30) %>% 
-  mutate(lucro = receita - orcamento) %>% 
+  filter(n() >= 15) %>%  # exemplo de como o filter respeita o group_by
+  ungroup() %>% #desagrupa
+ # mutate(lucro = receita - orcamento) %>% 
   ggplot() +
-  geom_boxplot(aes(x = direcao, y = lucro))
+  geom_boxplot(aes(y = direcao, x = lucro))
 
 # Ordenando pela mediana
 
 imdb %>% 
-  filter(!is.na(direcao)) %>%
+tidyr::drop_na(direcao, lucro) %>% 
   group_by(direcao) %>% 
-  filter(n() >= 30) %>% 
+  filter(n() >= 15) %>%  # exemplo de como o filter respeita o group_by
   ungroup() %>% 
   mutate(
     lucro = receita - orcamento,
     direcao = forcats::fct_reorder(direcao, lucro, na.rm = TRUE)
   ) %>% 
   ggplot() +
-  geom_boxplot(aes(x = direcao, y = lucro))
+  geom_boxplot(aes(y = direcao, x = lucro), 
+               outlier.color = "red", 
+               outlier.alpha = 0.5)
+
+# Remover os outliers do boxplot
+imdb %>% 
+  tidyr::drop_na(direcao, lucro) %>% 
+  group_by(direcao) %>% 
+  filter(n() >= 15) %>%  # exemplo de como o filter respeita o group_by
+  ungroup() %>% 
+  mutate(
+    lucro = receita - orcamento,
+    direcao = forcats::fct_reorder(direcao, lucro, na.rm = TRUE)
+  ) %>% 
+  ggplot() +
+  geom_boxplot(aes(y = direcao, x = lucro), outlier.shape = NA)
 
 # Título e labels ---------------------------------------------------------
 
@@ -312,13 +332,24 @@ imdb %>%
   ggplot() +
   geom_point(mapping = aes(x = orcamento, y = receita, color = lucro)) +
   labs(
-    x = "Orçamento ($)",
-    y = "Receita ($)",
-    color = "Lucro ($)",
+     x = "Orçamento ($)",
+     y = "Receita ($)",
+     color = "Lucro ($)",
+     
+     # opcoes gerais que podem ser usadas em todos os gráficos
     title = "Gráfico de dispersão",
     subtitle = "Receita vs Orçamento",
     caption = "Fonte: imdb.com"
   )
+
+# outro exemplo - usando a função expression()
+
+imdb %>% 
+  ggplot() + 
+  geom_point(aes(x = orcamento, y = receita)) +
+  labs(x = expression(Área~(m^2)),
+       y = expression(R[2]))
+
 
 # Escalas
 imdb %>% 
@@ -326,8 +357,8 @@ imdb %>%
   summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
   ggplot() +
   geom_line(aes(x = ano, y = nota_media)) +
-  scale_x_continuous(breaks = seq(1896, 2016, 10)) +
-  scale_y_continuous(breaks = seq(0, 10, 2))
+  scale_x_continuous(breaks = seq(1890, 2030, 20)) +
+  scale_y_continuous(breaks = seq(0, 10, 1))
 
 # Visão do gráfico
 imdb %>% 
@@ -335,9 +366,9 @@ imdb %>%
   summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
   ggplot() +
   geom_line(aes(x = ano, y = nota_media)) +
-  scale_x_continuous(breaks = seq(1896, 2016, 10)) +
+  scale_x_continuous(breaks = seq(1890, 2030, 10)) +
   scale_y_continuous(breaks = seq(0, 10, 2)) +
-  coord_cartesian(ylim = c(0, 10))
+  coord_cartesian(ylim = c(0, 10), xlim = c(1900,2022))
 
 # Cores -------------------------------------------------------------------
 
@@ -346,12 +377,13 @@ imdb %>%
   count(direcao) %>%
   filter(!is.na(direcao)) %>% 
   top_n(5, n) %>%
+  mutate(direcao = forcats::fct_reorder(direcao, n)) %>% 
   ggplot() +
   geom_col(
     aes(x = n, y = direcao, fill = direcao), 
     show.legend = FALSE
   ) +
-  scale_fill_manual(values = c("orange", "royalblue", "purple", "salmon", "darkred"))
+  scale_fill_manual(values = c("darkturquoise", "royalblue", "purple", "salmon", "darkred"))
 # http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
 
 # Escolhendo pelo hexadecimal
@@ -365,11 +397,26 @@ imdb %>%
     show.legend = FALSE
   ) +
   scale_fill_manual(
-    values = c("#ff4500", "#268b07", "#ff7400", "#abefaf", "#33baba")
+    values = c("#0586AD", "#4CC2E6", "#07AEE0", "#4A6770", "#0586AD")
   )
+
+# viridis - paleta de cores acessível
+imdb %>% 
+  count(direcao) %>%
+  filter(!is.na(direcao)) %>% 
+  top_n(5, n) %>%
+  ggplot() +
+  geom_col(
+    aes(x = n, y = direcao, fill = direcao), 
+    show.legend = FALSE
+  ) +
+  scale_fill_viridis_d(option = "D")
+
+
 
 # Mudando textos da legenda
 imdb %>% 
+  select(ano, titulo, nota_imdb) %>% 
   mutate(sucesso_nota = case_when(nota_imdb >= 7 ~ "sucesso_nota_imbd",
                                   TRUE ~ "sem_sucesso_nota_imdb")) %>%
   group_by(ano, sucesso_nota) %>% 
@@ -381,7 +428,7 @@ imdb %>%
 # Definiando cores das formas geométricas
 imdb %>% 
   ggplot() +
-  geom_point(mapping = aes(x = orcamento, y = receita), color = "#ff7400")
+  geom_point(mapping = aes(x = orcamento, y = receita), color = "#1B405E")
 
 # Tema --------------------------------------------------------------------
 
@@ -389,24 +436,39 @@ imdb %>%
 imdb %>% 
   ggplot() +
   geom_point(mapping = aes(x = orcamento, y = receita)) +
-  # theme_bw() 
+   theme_bw() 
+  # theme_light()
   # theme_classic() 
   # theme_dark()
-  theme_minimal()
+  # theme_minimal()
+  # theme_void()
+  
+  
 
 # A função theme()
 imdb %>% 
   ggplot() +
   geom_point(mapping = aes(x = orcamento, y = receita)) +
   labs(
-    title = "Gráfico de dispersão",
+    title = "Gráfico de dispersão ",
     subtitle = "Receita vs Orçamento"
   ) +
   theme(
-    plot.title = element_text(hjust = 0.5),
+    plot.title = element_text(hjust = 0.5, 
+                              colour = "red",
+                              size = 15,
+                              family = "Star Jedi"
+                              ),
     plot.subtitle = element_text(hjust = 0.5)
-  )
+  ) 
+
 
 # Mais conteúdo sobre a função theme() no curso de
 # visualizacao de dados
 # https://loja.curso-r.com/visualizac-o-de-dados.html
+
+# uso dos :: 
+dplyr::count(imdb, direcao)
+stats::median(imdb$nota_imdb)
+datasets::airquality
+magrittr::`%>%`(imdb, count(direcao))
