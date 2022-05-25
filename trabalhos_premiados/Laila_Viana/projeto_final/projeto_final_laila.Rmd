@@ -1,0 +1,232 @@
+---
+title: "<span style='font-size: 40px'>Analise das cartas do jogo</style> <span style='font-size: 60px'>Hearthstone</style>"
+author: "<span style='font-size: 20px'>Laila Viana</style>"
+date: ""
+output: 
+    html_document:
+        highlight: textmate
+        theme: flatly
+        number_sections: no
+        toc: yes
+        toc_float: 
+            collapsed: yes
+            smooth_scroll: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo = FALSE}
+@font-face {
+    font-family: "LHC";
+    src: url("d:\\Documents\\Curso-R\\R-para-Ciencia-de-Dados-I\\projeto_final\\lhf-uncial-caps.ttf");
+}
+h4.author {
+  font-size: 24px;
+  color: #845d48;
+  font-weight: bold;
+  font-family: "LHC";
+}
+
+h1{
+color: #845d48;
+font-family: "LHC";
+font-size: 36px;
+}
+
+h2{
+color: #845d48;
+font-family: "LHC";
+}
+
+p{
+color: gray;
+font-size: 18px;
+}
+
+div {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #ebc341;
+    background-color: #845d48;
+    border-color: #337ab7;
+}
+
+a {
+  color: #ebc341;
+}
+
+```
+
+# SOBRE O JOGO
+
+Hearthstone é um jogo de cartas estratégico online criado em 2014 pela Blizzard, onde os jogadores escolhem um herói do universo de Warcraft (dentre nove existentes). Cada herói/classe possui características diferentes que permitem formas distintas de estratégia, isso se dá graças a cartas exclusivas de cada um deles. Após escolher sua classe, o jogador deve construir um deck com no máximo 30 cartas e jogar em turnos, podendo utilizar feitiços, armas, habilidades heróicas ou lacaios. No primeiro turno o jogador começa com 1 mana e a cada rodada esse número aumenta, até chegar a 10. Sendo assim, os movimentos são limitados pois cada carta possui um custo e o jogador deve respeitar a quantidade de mana disponível em cada turno. Além disso, cada herói possui um poder heróico, que geralmente custa 2 de mana, e permite que o jogador realize uma ação no turno mesmo que não tenha cartas naquele momento. 
+
+Este trabalho tem como objetivo analisar o número, o custo médio, o ataque, a vida e a raridade das cartas de cada classe do jogo Hearthstone e comparar com a descrição de cada classe.  
+    
+Para realizar as análises pretendidas, um [banco de dados de cartas de Hearthstone](https://www.kaggle.com/datasets/jeradrose/hearthstone-cards) presente no kaggle foi baixado, importado, manipulado e analisado no R, utilizando pacotes como o `tidyverse`, `showtext` e `patchwork`. 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# carregando as bibliotecas --------
+library(tidyverse)
+library(tidytext)
+library(showtext)
+library(patchwork)
+
+# importing dataset ---------
+cards <- read_csv('cards.csv')
+
+#fonts
+font_add_google(family="Asul", "Asul")
+showtext_auto()
+
+# filtrando dataset ---------
+cards_filt <- cards %>% filter(!playerClass %in% c("DREAM", "DEATHKNIGHT", "NEUTRAL")) %>% 
+  filter(!is.na(playerClass))
+
+# renomeando o dataset --------
+cards_filt$playerClass <- sub("DRUID", "DRUIDA", cards_filt$playerClass)
+cards_filt$playerClass <- sub("MAGE", "MAGO", cards_filt$playerClass)
+cards_filt$playerClass <- sub("HUNTER", "CAÇADOR", cards_filt$playerClass)
+cards_filt$playerClass <- sub("PRIEST", "SACERDOTE", cards_filt$playerClass)
+cards_filt$playerClass <- sub("WARLOCK", "BRUXO", cards_filt$playerClass)
+cards_filt$playerClass <- sub("SHAMAN", "XAMÃ", cards_filt$playerClass)
+cards_filt$playerClass <- sub("WARRIOR", "GUERREIRO", cards_filt$playerClass)
+cards_filt$playerClass <- sub("ROGUE", "LADINO", cards_filt$playerClass)
+cards_filt$playerClass <- sub("PALADIN", "PALADINO", cards_filt$playerClass)
+
+cards_filt$type <- sub("SPELL", "FEITIÇO", cards_filt$type)
+cards_filt$type <- sub("ENCHANTMENT", "ENCANTO", cards_filt$type)
+cards_filt$type <- sub("MINION", "LACAIO", cards_filt$type)
+cards_filt$type <- sub("HERO_POWER", "PODER DO HERÓI", cards_filt$type)
+cards_filt$type <- sub("HERO", "HERÓI", cards_filt$type)
+cards_filt$type <- sub("WEAPON", "ARMA", cards_filt$type)
+
+cards_filt$rarity <- sub("RARE", "RARA", cards_filt$rarity)
+cards_filt$rarity <- sub("LEGENDARY", "LENDÁRIA", cards_filt$rarity)
+cards_filt$rarity <- sub("EPIC", "ÉPICA", cards_filt$rarity)
+cards_filt$rarity <- sub("COMMON", "COMUM", cards_filt$rarity)
+cards_filt$rarity <- sub("FREE", "LIVRE", cards_filt$rarity)
+
+
+# criando a paleta --------
+paleta <- c("#432B48", "#524B44", "#8A9B2E", "#7A471C", "#94230E", "#1290B5",
+             "#D0C973", "#51387E", "#578283")
+
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source("tema_ggplot.R")
+```
+
+
+# NUMERO E CUSTO MEDIO DE CARTAS POR CLASSE
+Foi possível observar que dentre todas as classes de Hearthstone, o que apresentou maior número de cartas e menor preço médio foi a classe druida (Figura 1 e 2). Ele possui acima de 150 cartas, enquanto as demais cartas possuem cerca de 100 a 120 cartas exclusivas. É interessante notar o baixo custo da classe druida, que está de acordo com a premissa da classe, que consiste em encher a mesa de lacaios o mais rápido possível e lançar feitiços poderosos logo no início do jogo. Outra coisa legal de ser notada é a presença da classe bruxo como a que possui maior preço médio de cartas. Ele tem a estratégia de causar dano a si mesmo ou descartar cartas aleatoriamente com a finalidade de conseguir mais mana no início do jogo para conjurar feitiços e invocar seus lacaios.    
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,  fig.height = 5, fig.width = 5, fig.align = "center"}
+f1 <- cards_filt %>% group_by(playerClass) %>% 
+  summarise(numero = n()) %>%  
+  ggplot(aes(y= fct_reorder(playerClass, numero, .desc = FALSE), 
+             x = numero, fill = playerClass)) +  tema_ggplot() +
+  geom_col(show.legend = FALSE, color = "black") + labs(x = "Número de cartas", y = "Classe", caption = "Figura 1: número de cartas por classe") + scale_fill_manual(values = paleta)
+
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height = 5, fig.width = 5, fig.align = "center"}
+# preço médio de cada classe
+f2 <- cards_filt %>% group_by(playerClass) %>% 
+  summarise(mean_cost = mean(cost, na.rm = TRUE)) %>% 
+  ggplot(aes(y= fct_reorder(playerClass, mean_cost, .desc = FALSE), 
+             x = mean_cost, fill = playerClass)) + 
+  geom_col(show.legend = FALSE, color = "black") +
+  tema_ggplot() + labs(x= "Custo médio das cartas", y = "Classe", caption = "Figura 2: custo médio de cartas por classe") +  scale_fill_manual(values = paleta)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+f1 + f2
+```
+
+# ATAQUE E VIDA POR CLASSE
+Ao analisar o ataque e a vida separadas por classe, é possível observar que a mediana do ataque entre todas as classes são semelhantes, com exceção do paladino, que é cerca de 2,5 enquanto os dos demais é acima de 3 (Figura 3). Isso acontece pois o paladino tem como estratégia a invocação de vários lacaios mais fracos e através de feitiços os tornam ameaças difíceis de se confrontar ao aumentar seu poder de ataque e sua vida. Já em relação a vida das cartas exclusivas de cada classe nota-se que o caçador é o que possui menor mediana de vida (Figura 4). Isso se dá pelo fato da classe ser mais focada em causar dano direto, seja através de feitiços ou através de seus lacaios, com diversas sinergias de entre eles de invocação ou dano.  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height = 5, fig.width = 5, fig.align = "center"}
+f3 <- cards_filt %>% group_by(playerClass) %>% 
+  ggplot(aes(x = attack, y = fct_reorder(playerClass, 
+                                              attack, .desc = TRUE), 
+             fill = playerClass)) + 
+  geom_boxplot(show.legend = FALSE, outlier.shape = NA) + tema_ggplot() + labs(x= "Ataque", y = "Classe", caption = "Figura 3: boxplot do ataque por classe") + scale_fill_manual(values = paleta)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height = 5, fig.width = 5, fig.align = "center"}
+f4 <- cards_filt %>% group_by(playerClass) %>% 
+  ggplot(aes(x = health, y = fct_reorder(playerClass, health, 
+                                              .desc = FALSE), 
+             fill = playerClass)) + 
+  geom_boxplot(show.legend = FALSE, outlier.shape = NA) + xlim(0,10) +
+  tema_ggplot() + scale_fill_manual(values = paleta) +
+  labs(x = "Vida", y = "Classe", caption = "Figura 4: boxplot da vida por classe")
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align = "center"} 
+f3 + f4
+```
+
+
+# TIPOS DE CARTAS POR CLASSE
+Agora vamos analisar a quantidade de tipos de cartas por classe. Como já citado anteriormente, cada classe tem estratégia diferente para vencer o jogo. E nesse resultado conseguimos ver que as classes bruxo, caçador, ladino e xamã possuem mais cartas referentes a lacaios quando comparados as demais classes, que possuem mais feitiços do que lacaios (Figura 5). E isso bate com a descrição fornecida de cada herói, o mago, por exemplo, é considerada uma classe versátil focada em feitiços e poder mágico. O sacerdote é uma classe baseada em curar, fortalecer lacaios e adivinhar os movimentos do oponente, copiando cartas do deck adversário, tudo isso graças aos feitiços.
+
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"} 
+cards_filt %>% 
+  group_by(playerClass) %>% 
+  count(type) %>% 
+  ggplot(aes(y = fct_reorder(type, n, .desc = FALSE), x = n, fill = playerClass)) + 
+  geom_col(show.legend = FALSE, color = "black") +
+  scale_fill_manual(values = paleta) +
+  facet_wrap(~playerClass) + tema_ggplot() + labs(x="Número de cartas", y = "Tipo de carta", caption = "Figura 5: número de cartas separadas por tipo e por classe")
+```
+
+# CUSTO VS ATAQUE DAS CLASSES
+Quando vamos avaliar a relação entre o custo e o ataque das classes, observa-se que para todos conforme aumenta o ataque aumenta também o custo das cartas (Figuta 6). Porém acontece algo legal com a classe druida e xamã, eles possuem cartas de grande ataque e um custo reduzido quando comparados aos demais. Isso é interessante para o xamã, que é uma classe que mais focada em lacaios. Inclusive, uma de suas estratégias é invocar lacaiosaterrorizantes em pouco tempo, ao custo de um turno seguinte enfraquecido.  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+cards_filt %>% group_by(playerClass) %>% ggplot(aes(x = attack, y = cost, 
+                                                    color = playerClass)) +
+  geom_point(show.legend = FALSE) + geom_smooth(show.legend = FALSE) + scale_colour_manual(values = paleta) + 
+  facet_wrap(~playerClass, ncol = 3) + tema_ggplot() + labs(x="Ataque", y = "Custo", caption = "Figura 6: relação entre o custo das cartas e o ataque")
+```
+
+# CUSTO VS VIDA DAS CLASSES
+Nessa análise, algo semelhante foi observado ao tópico de cima, o que era já esperado. Conforme aumenta a vida, aumenta também o custo (Figura 7). Entretanto, duas coisas chamam a atenção. A primeira é com relação ao xamã, que tem um padrão muito parecido com a análise de cima, tendo cartas que possuem muita vida e um menor custo quando comparadas às demais, o que é interessante pra classe visto sua estratégia. E segundo, é o xamã é a classe que possui cartas com maior vida, chegando a 10, enquanto demais classes, principalmente classes focadas em feitiços, a vida máxima fica entre 7 - 8.  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+cards_filt %>% group_by(playerClass) %>% 
+  ggplot(aes(x = health, y = cost, color = playerClass)) +
+  geom_point(show.legend = FALSE) + geom_smooth(show.legend = FALSE) + scale_colour_manual(values = paleta) + 
+  facet_wrap(~playerClass, ncol = 3) + tema_ggplot() + labs(x="Vida", y = "Custo", caption = "Figura 7: relação entre o custo das cartas e a vida") + xlim(0,10)
+```
+
+# RARIDADE DAS CARTAS DE CADA CLASSE
+Por fim, analisamos a quantidade de cartas separadas por raridade entre as classes (Figura 8). Para todas elas é semelhante a distribuição das cartas conforme sua raridade, com exceção de druida, que possui muito mais cartas comuns do que as demais. Mas isso era esperado, já que na primeira análise feita essa classe foi a que teve maior número de cartas.  
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+cards_filt %>% group_by(playerClass) %>% count(rarity) %>% 
+  drop_na() %>%  
+  ggplot(aes(y= fct_reorder(rarity, n, .desc = TRUE), x = n, fill = playerClass)) + geom_col(show.legend = FALSE, color = "black") + 
+  scale_fill_manual(values = paleta) +
+  facet_wrap(~playerClass, ncol = 3) + tema_ggplot() + labs(x="Número de cartas", y = "Raridade", caption = "Figura 8: número de cartas separadas com base na raridade e por classe")
+```
+
+# REFERENCIAS
+[Site oficial do jogo Hearthstone](https://playhearthstone.com/pt-br)   
+[Wikipédia de Hearthstone](https://pt.wikipedia.org/wiki/Hearthstone)
+
+<center>
+![](https://media1.giphy.com/media/1pAe88hQLZ376QO2jM/giphy.gif?cid=ecf05e47ke8cda76a1kbam01jilwbtilrr3git7tytacxji3&rid=giphy.gif&ct=g)
+</center>  
