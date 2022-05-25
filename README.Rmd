@@ -41,6 +41,13 @@ Fora do horário de aula ou monitoria:
 
 - perguntas sobre R, principalmente as que envolverem código, deverão ser enviadas no [nosso fórum](https://discourse.curso-r.com/).
 
+## Trabalhos finais premiados
+
+- Laila Viana - https://curso-r.github.io/202203-r4ds-1/trabalhos_premiados/Laila_Viana/index.html
+
+- Irene Slusarz - https://curso-r.github.io/202203-r4ds-1/trabalhos_premiados/Irene_Slusarz/
+
+
 
 ## Slides
 
@@ -167,26 +174,6 @@ tarefas |>
   knitr::kable(col.names = c("Aula", "Descrição"))
 ```
 
-
-
-```{r echo=FALSE}
-# 
-# ## Trabalhos finais premiados
-# nome_pasta <- "trabalhos_premiados"
-# 
-# tibble::tibble(
-#   script = CursoRopen:::list_github_files(params$turma, nome_pasta, ".zip|.rar"),
-#   link = paste0(
-#     "https://github.com/curso-r/",
-#     params$turma,
-#     "/raw/master/",
-#     script
-#   ),
-#   pasta_compactada = glue::glue("[{script}]({link})")
-# ) %>% 
-#   dplyr::select(pasta_compactada) %>% 
-#   knitr::kable()
-```
 
 
 
